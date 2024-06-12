@@ -40,16 +40,31 @@ const defaultTheme = createTheme();
 export default function SignIn() {
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-
-  const [showSignInPage, setShowSIgnInPage] = React.useState(false);
-
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [showSignInPage, setShowSignInPage] = React.useState(false);
 
-  //signin  the existing user
+  const validateEmail = (email) => {
+    return email.includes("@") && email.includes(".");
+  };
+
+  const validatePassword = () => {
+    return loginPassword.length >= 6;
+  };
+
   const handleSignInUser = async (event) => {
     event.preventDefault();
-    console.log(loginEmail);
-    console.log(loginPassword);
+
+    if (!validateEmail(loginEmail)) {
+      setError("Invalid email address");
+      return;
+    }
+
+    if (!validatePassword(loginPassword)) {
+      setError("Password must be at least 6 characters long");
+      return;
+    }
+
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -57,15 +72,17 @@ export default function SignIn() {
         loginPassword
       );
       console.log("User Logged in:", userCredential.user);
+      navigate('/MainPage')
     } catch (error) {
-      console.log(error.message);
+      setError(error.message);
     }
   };
 
-  const handleSignInPage = () => {
-    setShowSIgnInPage(false);
+  const handleSwitchToSignUpPage = () => {
+    setShowSignInPage(false);
     navigate("/SignUp");
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -125,6 +142,7 @@ export default function SignIn() {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
+             {error && <div style={{ color: "red" }}>{error}</div>}
             <Button
               type="submit"
               fullWidth
@@ -141,7 +159,11 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2" onClick={handleSignInPage}>
+                <Link
+                  href="#"
+                  variant="body2"
+                  onClick={handleSwitchToSignUpPage}
+                >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

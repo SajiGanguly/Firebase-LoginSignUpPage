@@ -8,7 +8,7 @@ import {
   Routes,
 } from "react-router-dom";
 import SignUp from "./components/Pages/SignUp";
-import { useState } from "react";
+import MainPage from "./components/Pages/MainPage";
 
 function App() {
  
@@ -20,6 +20,7 @@ function App() {
         <Route path="/" element={<SignIn />} />
         <Route path="/signUp" element={<SignUp />} />
         <Route path="/signIn" element={<SignIn />} />
+        <Route path="/mainpage" element={<MainPage />} />
       </Routes>
     </Router>
   );
