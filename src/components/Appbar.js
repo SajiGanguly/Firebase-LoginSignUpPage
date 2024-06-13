@@ -11,6 +11,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import PersonPinIcon from '@mui/icons-material/PersonPin';
+
 
 export default function TheAppBar() {
   const [auth, setAuth] = React.useState(true);
@@ -42,7 +44,7 @@ export default function TheAppBar() {
           label={auth ? 'Logout' : 'Login'}
         />
       </FormGroup>
-      <AppBar position="static">
+      <AppBar position="static" backgroundColor="#a3bce6">
         <Toolbar>
           <IconButton
             size="large"
@@ -66,7 +68,8 @@ export default function TheAppBar() {
                 onClick={handleMenu}
                 color="inherit"
               >
-                <AccountCircle />
+                {/* <AccountCircle /> */}
+                <PersonPinIcon/>
               </IconButton>
               <Menu
                 id="menu-appbar"
